@@ -62,7 +62,6 @@ def clean_data(project_name):
     nodes['size'] = pd.Series(sizes)
     nodes['info'] = pd.Series(ifs)
     nodes = nodes.sort_values('id')
-    print(nodes)
 
     edges = pd.read_csv(project_name + '_edges.csv', delimiter=' ', names=['source', 'n1', 'n2'])
     edges['target'] = edges.index
@@ -111,8 +110,8 @@ def edge_color_recurse(node):
             node.get_c2().get_child().set_parent_edge_color('#0000FF')
             node.get_c1().get_child().set_parent_edge_color('#FFA500')
         else:
-            node.get_c1().get_child().set_parent_edge_color('#FFA500')
-            node.get_c2().get_child().set_parent_edge_color('#FFA500')
+            node.get_c1().get_child().set_parent_edge_color('#FFC0CB')
+            node.get_c2().get_child().set_parent_edge_color('#FFC0CB')
         edge_color_recurse(node.get_c1().get_child())
         edge_color_recurse(node.get_c2().get_child())
 
@@ -188,14 +187,17 @@ def graph_to_cyto(project_name):
     p4c.set_node_color_bypass(['root'], '#FF0000')
 
     end = time.time()
+
+    nodes.to_csv('x.csv')
+    edges.to_csv('y.csv')
     print("time taken in seconds:", end - start)
     print("time in minutes:", (end - start) / 60)
 
 
 if __name__ == "__main__":
-    project = input("Please enter the name of your files without the extension, case sensitive. (ex - cardiacArrestDise"
-                    "ases): ")
-    # project = "cardiacArrestDiseases"
+    # project = input("Please enter the name of your files without the extension, case sensitive. (ex - cardiacArrestDise"
+    #                 "ases): ")
+    project = "1983_1985_window8_v"
     clusters_to_csv(project)
     tree_to_txt(project)
     clean_data(project)
